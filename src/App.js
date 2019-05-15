@@ -1,26 +1,43 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { Component } from 'react';
+import { withData } from './DataProvider';
+import "./App.css"
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+class App extends Component {
+  constructor(){
+    super()
+    this.state={
+      toggle: false
+    }
+  }
+  componentDidMount() {
+    this.props.getURL()
+  }
+  handleToggle = () => {
+
+  }
+  handleClick = (e) =>{
+    e.preventDefault()
+    this.props.getURL()
+    this.setState({
+      toggle: true
+    })
+  }
+  render() {
+
+    return (
+      <div>
+          <h1 style={{textAlign:"center", fontSize: 50, margin: 0, marginBottom: 20}}><span style={{color:"red"}}>Worst</span> Insults</h1>
+          {this.state.toggle === false ? 
+            <button style={{display:"block", margin:"auto", zoom: 2, backgroundColor:"red", border:"red solid", borderRadius:5, color: "white"}} onClick={this.handleClick}>DO NOT PRESS</button>
+            :
+            <>
+            <button style={{display:"block", margin:"auto", zoom: 2, backgroundColor:"red", border:"red solid", borderRadius:5, color: "white"}} onClick={this.handleClick}>DO NOT PRESS</button>
+            <h1 style={{textAlign:"center", padding: "0px 10px"}}>{this.props.url}</h1>
+            </>
+          }
+      </div>
+    );
+  }
 }
 
-export default App;
+export default withData(App);
